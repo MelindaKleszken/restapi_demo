@@ -1,4 +1,5 @@
 require('./db/connection');
+const cors = require("cors");
 const express = require('express');
 const {postRouter} = require("./routes/post");
 const {userRouter} = require("./routes/user");
@@ -9,7 +10,7 @@ const app = express();
 
 //this will convert JSON to JavaScript
 app.use(express.json());
-
+app.use(cors());
 app.use(userRouter);
 app.use(postRouter);
 

@@ -19,18 +19,18 @@ exports.listUserPosts = async (req, res) => {
     }
 };
 
-exports.addNewPost = async (req, res) => {
-    try {
-        const post = new Post(req.body);
-        const savedPost = await post.save();
-        console.log(req.body);
-        res.status(201).send(savedPost);
-    } catch (error) {
-        res.status(500).send({ message: "Could not connect" });
-    }
-};
+// exports.addNewPost = async (req, res) => {
+//     try {
+//         const post = new Post(req.body);
+//         const savedPost = await post.save();
+//         console.log(req.body);
+//         res.status(201).send(savedPost);
+//     } catch (error) {
+//         res.status(500).send({ message: "Could not connect" });
+//     }
+// };
 
-exports.addNewPostAuthor = async (req, res) => {
+exports.addNewPost = async (req, res) => {
     try {
         // const post = new Post(req.body);
         // const user = await User.findById(req.params.user_id);
@@ -44,6 +44,31 @@ exports.addNewPostAuthor = async (req, res) => {
     } catch (error) {
         res.status(400).send(error);
     }
+};
+
+exports.getPostsByUser = async (req, res) => {
+  try {
+    const allPosts = await Post.find({ author: req.params.user_id });
+    res.status(200).send(allPosts);
+  } catch (error) {
+    res.status(404).send({ message: "user not found" });
+  }
+};
+
+exports.addPost = async (req, res) => {
+  try {
+    // const post = new Post(req.body);
+    // const user = await User.findById(req.params.user_id);
+    // user.posts.push(post);
+    // const returnedValue = await user.save();
+    const post = new Post(req.body);
+    post.author = req.params.user_id;
+    const returnedValue = await post.save();
+
+    res.status(201).send(returnedValue);
+  } catch (error) {
+    res.status(400).send(error);
+  }
 };
 
 exports.updatePost = async (req, res) => {
