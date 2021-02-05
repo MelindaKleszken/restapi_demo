@@ -4,6 +4,7 @@ const express = require('express');
 const {postRouter} = require("./routes/post");
 const {userRouter} = require("./routes/user");
 
+
 //make sure to add 2 ports for listening: the users any port and your local port
 const port = process.env.PORT || 5000;
 const app = express();
